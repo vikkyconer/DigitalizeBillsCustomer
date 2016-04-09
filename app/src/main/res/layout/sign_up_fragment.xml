@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_screen_green"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/email_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/first_name"
+            android:layout_width="@dimen/email_width"
+            android:layout_height="@dimen/email_height"
+            android:background="@color/white"
+            android:hint="First Name"
+            android:paddingLeft="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/last_name"
+            android:layout_width="@dimen/email_width"
+            android:layout_height="@dimen/email_height"
+            android:background="@color/white"
+            android:hint="Last Name"
+            android:paddingLeft="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="@dimen/email_width"
+            android:layout_height="@dimen/email_height"
+            android:background="@color/white"
+            android:hint="Email"
+            android:paddingLeft="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="@dimen/email_width"
+            android:layout_height="@dimen/email_height"
+            android:background="@color/white"
+            android:hint="Password"
+            android:paddingLeft="4dp"
+            android:password="true" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="@dimen/email_width"
+            android:layout_height="@dimen/email_height"
+            android:background="@drawable/button"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:textColor="@color/login_screen_green" />
+    </LinearLayout>
+
+
+</RelativeLayout>
