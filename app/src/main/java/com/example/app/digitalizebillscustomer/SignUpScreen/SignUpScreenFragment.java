@@ -71,7 +71,7 @@ public class SignUpScreenFragment extends Fragment implements SignUpScreenView {
         signUpRequestMap.put("first_name", firstName.getText().toString());
         signUpRequestMap.put("last_name", lastName.getText().toString());
         signUpRequestMap.put("email", email.getText().toString());
-        signUpRequestMap.put("pass", password.getText().toString());
+        signUpRequestMap.put("password", password.getText().toString());
 //        signUpRequestMap.put("device_id", Utility.uniqueDeviceID(getActivity()));
 //        signUpRequestMap.put("device_token", AppSettings.getValue(getActivity(), AppSettings.PREF_GCM_REGISTRATION_ID, ""));
 //        signUpRequestMap.put("device_type", "android");

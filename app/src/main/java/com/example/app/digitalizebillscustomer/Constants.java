@@ -5,7 +5,7 @@ package com.example.app.digitalizebillscustomer;
  */
 public class Constants {
 
-    public static final String BASE_URL = "http://192.168.177.21:3000/";
+    public static final String BASE_URL = "https://secure-waters-62686.herokuapp.com";
 
     public static int SPLASHTIME = 3000;
 

@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.digitalizebillscustomer.Navigator;
 import com.example.app.digitalizebillscustomer.R;
 import com.example.app.digitalizebillscustomer.User;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import rx.Observable;
@@ -27,6 +30,7 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     private BehaviorSubject<Map<String, String>> signIn = BehaviorSubject.create();
     private TextView signUp;
     Button signInButton;
+    EditText email, password;
 
     @Nullable
     @Override
@@ -51,6 +55,8 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     private void initializeViews(View view) {
         signUp = (TextView) view.findViewById(R.id.sign_up);
         signInButton = (Button) view.findViewById(R.id.sign_in);
+        email = (EditText) view.findViewById(R.id.email);
+        password = (EditText) view.findViewById(R.id.password);
     }
 
     @Override
@@ -62,6 +68,8 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     public void userAuthenticated(User signInResponse) {
         if (signInResponse.getStatus() != false) {
             Navigator.toMainScreen(getActivity());
+        } else {
+            Toast.makeText(getActivity(), "Username or password wrong", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -69,6 +77,11 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     public void onClick(View v) {
         if (v.getId() == R.id.sign_up) {
             Navigator.toSingUpScreen(getActivity());
+        } else {
+            Map<String, String> signIpRequestMap = new LinkedHashMap<>();
+            signIpRequestMap.put("email", email.getText().toString());
+            signIpRequestMap.put("password", password.getText().toString());
+            signIn.onNext(signIpRequestMap);
         }
     }
 }
