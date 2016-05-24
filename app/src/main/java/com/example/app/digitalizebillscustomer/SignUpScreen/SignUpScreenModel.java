@@ -1,6 +1,6 @@
 package com.example.app.digitalizebillscustomer.SignUpScreen;
 
-import com.example.app.digitalizebillscustomer.User;
+import com.example.app.digitalizebillscustomer.Models.User;
 
 import java.util.Map;
 

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.app.digitalizebillscustomer.Navigator;
 import com.example.app.digitalizebillscustomer.R;
-import com.example.app.digitalizebillscustomer.User;
+import com.example.app.digitalizebillscustomer.Models.User;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

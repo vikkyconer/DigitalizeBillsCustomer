@@ -1,5 +1,7 @@
 package com.example.app.digitalizebillscustomer;
 
+import com.example.app.digitalizebillscustomer.Models.User;
+
 import java.util.Map;
 
 import retrofit.http.FieldMap;

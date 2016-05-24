@@ -1,4 +1,4 @@
-package com.example.app.digitalizebillscustomer;
+package com.example.app.digitalizebillscustomer.Models;
 
 /**
  * Created by vikkycorner on 09/04/16.

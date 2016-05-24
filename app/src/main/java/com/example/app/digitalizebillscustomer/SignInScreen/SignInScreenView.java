@@ -1,7 +1,7 @@
 package com.example.app.digitalizebillscustomer.SignInScreen;
 
 
-import com.example.app.digitalizebillscustomer.User;
+import com.example.app.digitalizebillscustomer.Models.User;
 
 import rx.Observable;
 import java.util.Map;

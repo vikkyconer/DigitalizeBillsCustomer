@@ -16,10 +16,10 @@ public class Navigator {
         context.startActivity(intent);
     }
 
-    public static void toLoginScreen(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        context.startActivity(intent);
-    }
+//    public static void toLoginScreen(Context context) {
+//        Intent intent = new Intent(context, LoginActivity.class);
+//        context.startActivity(intent);
+//    }
 
     public static void toSignInScreen(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);

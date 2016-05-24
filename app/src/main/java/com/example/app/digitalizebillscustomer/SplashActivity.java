@@ -18,7 +18,8 @@ public class SplashActivity extends ActionBarActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigator.toSignInScreen(SplashActivity.this);
+                Navigator.toMainScreen(SplashActivity.this);
+//                Navigator.toSignInScreen(SplashActivity.this);
                 SplashActivity.this.finish();
             }
         }, Constants.SPLASHTIME);

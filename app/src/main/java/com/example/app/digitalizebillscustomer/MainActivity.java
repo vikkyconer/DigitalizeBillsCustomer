@@ -7,23 +7,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.app.digitalizebillscustomer.Models.Bill;
+import com.example.app.digitalizebillscustomer.Models.Product;
+
 public class MainActivity extends AppCompatActivity {
+
+    private DatabaseHelper db;
+    private Bill bill;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        initialize();
+        setData();
+        createTable();
+    }
+
+    private void createTable() {
+        long billId = db.createBill(bill);
+        long productId = db.createProduct(product);
+
+        long id = db.createBillProduct(billId,productId);
+    }
+
+    private void setData() {
+        bill.setId(123);
+        bill.setVendorName("MacDonald");
+        bill.setVendorAddress("Pheonix");
+        bill.setBillDate("20/5/16");
+        bill.setAmount(160);
+
+        product.setId(456);
+        product.setName("MacAallo");
+        product.setPrice(25);
+    }
+
+    private void initialize() {
+        db = new DatabaseHelper(this);
+        bill = new Bill();
+        product = new Product();
+
     }
 
 }
