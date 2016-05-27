@@ -212,7 +212,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/groceries" />
+                    android:src="@drawable/others" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/groceries" />
+                    android:src="@drawable/share" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -262,7 +262,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/groceries" />
+                    android:src="@drawable/sync" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -287,7 +287,7 @@
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="10dp"
-                    android:src="@drawable/groceries" />
+                    android:src="@drawable/logout" />
 
                 <TextView
                     android:layout_width="wrap_content"
