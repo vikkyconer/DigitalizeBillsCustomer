@@ -28,6 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
 
     //BILL Table Column Names
+    private static final String KEY_BILL_ID_SERVER = "bill_id";
+    private static final String KEY_VENDOR_BILL_ID = "vendor_bill_id";
     private static final String KEY_VENDOR_NAME = "vendor_name";
     private static final String KEY_VENDOR_ADDRESS = "vendor_address";
     private static final String KEY_BILL_DATE = "bill_date";
@@ -36,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //PRODUCT Table Column Names
     private static final String KEY_PRODUCT_NAME = "product_name";
     private static final String  KEY_ITEM_PRICE = "price";
+    private static final String  KEY_QUANTITY= "quantity";
 
     //BILL_PRODUCT Table Column Names
     private static final String KEY_BILL_ID = "bill_id";

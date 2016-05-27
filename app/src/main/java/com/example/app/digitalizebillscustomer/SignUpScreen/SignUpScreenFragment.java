@@ -60,7 +60,7 @@ public class SignUpScreenFragment extends Fragment implements SignUpScreenView {
     }
 
     private void setEventsForViews() {
-        signUp.setOnClickListener(v -> authenticate());
+//        signUp.setOnClickListener(v -> authenticate());
     }
 
     private void authenticate() {
