@@ -4,18 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/main_screen_fragment"
-        android:name="com.example.app.digitalizebillscustomer.MainScreen.MainScreenFragment"
+    <!-- Framelayout to display Fragments -->
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nvView"
-        android:layout_width="wrap_content"
+    <!-- Listview to display slider menu -->
+    <ListView
+        android:id="@+id/list_slidermenu"
+        android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white"
-        app:menu="@menu/drawer_view" />
+        android:choiceMode="singleChoice"
+        android:divider="@color/menue_seperator"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/groceries"
+        android:background="@color/cardview_dark_background"/>
 
 </android.support.v4.widget.DrawerLayout>
