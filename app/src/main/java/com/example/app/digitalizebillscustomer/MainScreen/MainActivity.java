@@ -1,5 +1,6 @@
 package com.example.app.digitalizebillscustomer.MainScreen;
 
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.app.digitalizebillscustomer.AppService;
 import com.example.app.digitalizebillscustomer.Constants;
@@ -43,13 +46,16 @@ import java.util.LinkedList;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DrawerLayout mDrawer;
     private Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
+    private String type;
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +69,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        db = new DatabaseHelper(this);
     }
+
 
     private void getStoredData() {
         File sdcard = Environment.getExternalStorageDirectory();
@@ -78,13 +91,49 @@ public class MainActivity extends AppCompatActivity {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = "";
+            long billId = 0, productId;
+            int i;
+            Product product = null;
+    //        line = br.readLine();
+            Bill bill = new Bill();
 
-//            Log.i("Notes",br.readLine());
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                Log.i("Notes", line);
-                text.append('\n');
-            }
+    //       for (i = 0; line != null; i++) {
+    //            Log.i("lines", line);
+//               bill = new Bill();
+               bill.setId(12);
+               bill.setVendorName("a");
+               bill.setVendorAddress("af");
+               bill.setAmount(4);
+               bill.setBillDate("23");
+               db.createBill(bill);
+          /*      if (i == 0) {
+                    bill = new Bill();
+                    bill.setId(Integer.parseInt(line));
+                }
+                else if (i == 1)
+                    bill.setVendorName(line);
+                else if (i == 2)
+                    bill.setBillDate(line);
+                else if (i == 3) {
+                    bill.setAmount(Integer.parseInt(line));
+                    bill.setVendorAddress("MacD");
+                    billId = db.createBill(bill);
+                    Log.i("billId", String.valueOf(billId));
+                } else if (i > 3) {
+                    if ((i - 4) % 3 == 0) {
+                        product = new Product();
+                        product.setName(line);
+                    }
+                    if ((i - 4) % 3 == 1)
+                        product.setPrice(Integer.parseInt(line));
+                    else if ((i - 4) % 3 == 2) {
+                        product.setQuantity(Integer.parseInt(line));
+                        productId = db.createProduct(product);
+                        db.createBillProduct(billId, productId);
+                    }
+                } */
+  //             line = br.readLine();
+    //        }
             br.close();
 //            boolean deleted = file.delete();
 //            Log.i("Notes", String.valueOf(deleted));
@@ -96,62 +145,60 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.button_groceries:
+                type = "groceries";
+                break;
+            case R.id.button_clothing:
+                type = "clothing";
+                break;
+            case R.id.button_food_n_resto:
+                type = "food_n_resto";
+                break;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        super.setTitle(title);
-    }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
-
-    /*
-//    private MainScreenView mainScreenView() {
-//        return (MainScreenFragment) getSupportFragmentManager().findFragmentById(R.id.main_screen_fragment);
-//    }
-
-    private MainScreenModel mainScreenModel() {
-        return new MainScreenModelImpl(service());
-
-    }
-
-//    private SlidingDrawerView slidingDrawerView() {
-//        return (SlidingDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.left_drawer);
-//    }
-
-    private SlidingDrawerModel slidingDrawerModel() {
-        return new SlidingDrawerModelImpl(service());
-    }
-
-    private AppService service() {
-        AppService appService = restAdapterBuilder().setEndpoint(Constants.BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL).build().create(AppService.class);
-        return appService;
-    }
-
-    private RestAdapter.Builder restAdapterBuilder() {
-        return new RestAdapter.Builder().setConverter(new GsonConverter(new GsonBuilder().create()));
-    }
-    */
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/button_groceries"
+            android:icon="@drawable/groceries"
+            android:title="Groceries" />
+        <item
+            android:id="@+id/button_food_n_resto"
+            android:icon="@drawable/food_n_resto"
+            android:title="Food and Restaurents" />
+        <item
+            android:id="@+id/button_clothing"
+            android:icon="@drawable/clothing"
+            android:title="Clothing" />
+        <item
+            android:id="@+id/button_entertainment"
+            android:icon="@drawable/entertainment"
+            android:title="Entertainment" />
+        <item
+            android:id="@+id/button_medical"
+            android:icon="@drawable/medical"
+            android:title="Medical" />
+        <item
+            android:id="@+id/button_others"
+            android:icon="@drawable/others"
+            android:title="Others" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/button_share"
+                android:icon="@drawable/share"
+                android:title="Share" />
+            <item
+                android:id="@+id/button_sync"
+                android:icon="@drawable/sync"
+                android:title="Sync" />
+            <item
+                android:id="@+id/button_log_out"
+                android:icon="@drawable/logout"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

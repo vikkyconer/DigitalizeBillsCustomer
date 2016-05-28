@@ -4,13 +4,19 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.app.digitalizebillscustomer.Models.Bill;
+import com.example.app.digitalizebillscustomer.Models.Product;
 import com.example.app.digitalizebillscustomer.R;
+import com.example.app.digitalizebillscustomer.RVAdapter;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import rx.Observable;
@@ -19,10 +25,17 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by vikkycorner on 27/05/16.
  */
-public class MainScreenFragment extends Fragment implements MainScreenView{
+public class MainScreenFragment extends Fragment {
 
     Dialog mProgress;
-    private final BehaviorSubject<Boolean> initialized = BehaviorSubject.create();
+    //    private final BehaviorSubject<Boolean> initialized = BehaviorSubject.create();
+//    private RecyclerView mRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView.LayoutManager mLayoutManager;
+//    private RVAdapter billAdapter;
+    private ArrayList<Bill> billList;
+    private ArrayList<Product> productList;
+    TextView check;
 
     @Nullable
     @Override
@@ -42,10 +55,19 @@ public class MainScreenFragment extends Fragment implements MainScreenView{
 
     private void initializeViews(View view) {
 //        mProgress = ProgressHUD.show(getActivity(),"",true,false,this,true);
-        initialized.onNext(true);
+//        initialized.onNext(true);
+//        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+//        mLayoutManager = new LinearLayoutManager(getActivity());
+        billList = new ArrayList<>();
+        productList = new ArrayList<>();
+        check = (TextView) view.findViewById(R.id.check);
+        check.setText(((MainActivity) getActivity()).getType());
+//        billAdapter = new RVAdapter(billList, productList, getActivity());
     }
 
     private void defaultConfiguration() {
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
 
     }
 
@@ -53,13 +75,4 @@ public class MainScreenFragment extends Fragment implements MainScreenView{
 
     }
 
-    @Override
-    public Observable<Boolean> Initialized() {
-        return initialized.asObservable();
-    }
-
-    @Override
-    public void showBills(LinkedList<Bill> bills) {
-
-    }
 }

@@ -11,14 +11,8 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bill_upper_edge" />
-
-
         <RelativeLayout
-            android:layout_width="290dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
 
@@ -41,6 +35,7 @@
                         android:typeface="sans" />
 
                     <TextView
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -61,6 +56,7 @@
                         android:typeface="sans" />
 
                     <TextView
+                        android:id="@+id/shop_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -76,16 +72,18 @@
                 android:layout_below="@id/title_container"
                 android:background="@color/white" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/item_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_container"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:weightSum="4">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:padding="5dp">
 
                     <TextView
@@ -97,7 +95,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
                     android:padding="5dp">
 
                     <TextView
@@ -105,7 +103,31 @@
                         android:layout_height="wrap_content"
                         android:text="PRICE" />
                 </LinearLayout>
-            </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="QUANTITY" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TOTAL" />
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -113,13 +135,17 @@
                 android:layout_below="@id/item_container"
                 android:background="@color/white" />
 
+            <LinearLayout
+                android:id="@+id/items_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_container"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+            </LinearLayout>
 
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bill_lower_edge" />
 
     </LinearLayout>
 </LinearLayout>

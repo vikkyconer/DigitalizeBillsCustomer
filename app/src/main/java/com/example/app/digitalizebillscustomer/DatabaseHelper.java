@@ -2,11 +2,16 @@ package com.example.app.digitalizebillscustomer;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.app.digitalizebillscustomer.Models.Bill;
 import com.example.app.digitalizebillscustomer.Models.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vikkycorner on 24/05/16.
@@ -37,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //PRODUCT Table Column Names
     private static final String KEY_PRODUCT_NAME = "product_name";
-    private static final String  KEY_ITEM_PRICE = "price";
-    private static final String  KEY_QUANTITY= "quantity";
+    private static final String KEY_ITEM_PRICE = "price";
+    private static final String KEY_QUANTITY = "quantity";
 
     //BILL_PRODUCT Table Column Names
     private static final String KEY_BILL_ID = "bill_id";
@@ -85,15 +90,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 * Creating a bill
 */
     public long createBill(Bill bill) {
+        Log.i("database","started");
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        Log.i("database","start saving");
         values.put(KEY_ID, bill.getId());
         values.put(KEY_VENDOR_NAME, bill.getVendorName());
         values.put(KEY_VENDOR_ADDRESS, bill.getVendorAddress());
         values.put(KEY_BILL_DATE, bill.getBillDate());
+        Log.i("database","bill date saved");
         values.put(KEY_AMOUNT, bill.getAmount());
 
+        Log.i("database","inserting");
         // insert row
         long bill_id = db.insert(TABLE_BILL, null, values);
 
@@ -107,9 +117,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, product.getId());
+//        values.put(KEY_ID, product.getId());
         values.put(KEY_PRODUCT_NAME, product.getName());
         values.put(KEY_ITEM_PRICE, product.getPrice());
+        values.put(KEY_QUANTITY, product.getQuantity());
 
         // insert row
         long product_id = db.insert(TABLE_PRODUCT, null, values);
@@ -128,5 +139,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long id = db.insert(TABLE_BILL_PRODUCT, null, values);
 
         return id;
+    }
+
+    public List<Bill> getBillByType(String type) {
+        List<Bill> billList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BILL;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Bill bill = new Bill();
+                bill.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                bill.setBillDate(c.getString(c.getColumnIndex(KEY_BILL_DATE)));
+                bill.setVendorName(c.getString(c.getColumnIndex(KEY_VENDOR_NAME)));
+//                place.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+                // adding to place list
+                billList.add(bill);
+            } while (c.moveToNext());
+        }
+
+        return billList;
     }
 }
