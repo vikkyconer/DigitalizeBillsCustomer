@@ -24,20 +24,18 @@ import java.util.List;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> {
 
     List<Bill> billList;
-    List<Product> productList;
     Context context;
     DatabaseHelper db;
 
 
-    public RVAdapter(List<Bill> billList, List<Product> productList, Context context) {
+    public RVAdapter(List<Bill> billList, Context context) {
         this.billList = billList;
-        this.productList = productList;
         this.context = context;
     }
 
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         PersonViewHolder pvh = new PersonViewHolder(v);
         db = new DatabaseHelper(context);
         return pvh;
@@ -52,8 +50,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     }
 
     private void initialize(PersonViewHolder holder, int i) {
-        holder.date.setText(billList.get(i).getBillDate());
-        holder.shopName.setText(billList.get(i).getVendorName());
+        holder.vendorName.setText(billList.get(i).getVendorName());
+        holder.amount.setText(String.valueOf(billList.get(i).getAmount()));
 
     }
 
@@ -72,17 +70,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     public static class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
         CardView cv;
-        TextView date;
-        TextView shopName;
-        LinearLayout itemContainer;
-        ArrayAdapter adapter;
+        TextView vendorName;
+        TextView amount;
+
 
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            date = (TextView) itemView.findViewById(R.id.date);
-            shopName = (TextView) itemView.findViewById(R.id.shop_name);
-            itemContainer = (LinearLayout) itemView.findViewById(R.id.item_container);
+            vendorName = (TextView) itemView.findViewById(R.id.vendor_name);
+            amount = (TextView) itemView.findViewById(R.id.bill_amount);
             itemView.setOnLongClickListener(this);
         }
 

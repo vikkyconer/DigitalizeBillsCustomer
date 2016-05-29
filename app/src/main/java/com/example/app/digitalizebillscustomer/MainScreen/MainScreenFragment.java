@@ -29,10 +29,10 @@ public class MainScreenFragment extends Fragment {
 
     Dialog mProgress;
     //    private final BehaviorSubject<Boolean> initialized = BehaviorSubject.create();
-//    private RecyclerView mRecyclerView;
-//    private RecyclerView.Adapter mAdapter;
-//    private RecyclerView.LayoutManager mLayoutManager;
-//    private RVAdapter billAdapter;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RVAdapter billAdapter;
     private ArrayList<Bill> billList;
     private ArrayList<Product> productList;
     TextView check;
@@ -56,11 +56,11 @@ public class MainScreenFragment extends Fragment {
     private void initializeViews(View view) {
 //        mProgress = ProgressHUD.show(getActivity(),"",true,false,this,true);
 //        initialized.onNext(true);
-//        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+//        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycleView);
 //        mLayoutManager = new LinearLayoutManager(getActivity());
         billList = new ArrayList<>();
         productList = new ArrayList<>();
-        check = (TextView) view.findViewById(R.id.check);
+        check = (TextView) view.findViewById(R.id.check_it);
         check.setText(((MainActivity) getActivity()).getType());
 //        billAdapter = new RVAdapter(billList, productList, getActivity());
     }

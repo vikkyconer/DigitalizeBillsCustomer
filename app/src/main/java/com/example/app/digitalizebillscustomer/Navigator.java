@@ -22,6 +22,12 @@ public class Navigator {
 //        context.startActivity(intent);
 //    }
 
+    public static void toBillDetailsActivity(Context context, int billId) {
+        Intent intent = new Intent(context, BillDetailsActivity.class);
+        intent.putExtra("billId", billId);
+        context.startActivity(intent);
+    }
+
     public static void toSignInScreen(Context context) {
         Intent intent = new Intent(context, SignInActivity.class);
         context.startActivity(intent);

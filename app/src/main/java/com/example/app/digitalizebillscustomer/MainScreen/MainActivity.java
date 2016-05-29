@@ -15,6 +15,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -28,7 +30,10 @@ import com.example.app.digitalizebillscustomer.Constants;
 import com.example.app.digitalizebillscustomer.DatabaseHelper;
 import com.example.app.digitalizebillscustomer.Models.Bill;
 import com.example.app.digitalizebillscustomer.Models.Product;
+import com.example.app.digitalizebillscustomer.Navigator;
 import com.example.app.digitalizebillscustomer.R;
+import com.example.app.digitalizebillscustomer.RVAdapter;
+import com.example.app.digitalizebillscustomer.RecyclerItemClickListener;
 import com.example.app.digitalizebillscustomer.SlidingDrawer.SlidingDrawerFragment;
 import com.example.app.digitalizebillscustomer.SlidingDrawer.SlidingDrawerModel;
 import com.example.app.digitalizebillscustomer.SlidingDrawer.SlidingDrawerModelImpl;
@@ -41,6 +46,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import retrofit.RestAdapter;
@@ -56,6 +62,11 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle drawerToggle;
     private String type;
     private DatabaseHelper db;
+    private RecyclerView mRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RVAdapter billAdapter;
+    private ArrayList<Bill> billList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +74,25 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initializeViews();
+        defaultConfiguration();
         getStoredData();
 
         //       new MainScreenPresenter(mainScreenModel(), mainScreenView());
         //       new SlidingDrawerPresenter(slidingDrawerModel(), slidingDrawerView());
+    }
+
+    private void defaultConfiguration() {
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(billAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        // do whatever
+                        Log.i("Notes Position", String.valueOf(position));              //change position to place id
+                        Navigator.toBillDetailsActivity(getApplicationContext(), billList.get(position).getId());
+                    }
+                })
+        );
     }
 
     private void initializeViews() {
@@ -79,6 +105,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         db = new DatabaseHelper(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
+        mLayoutManager = new LinearLayoutManager(this);
+        billList = new ArrayList<>();
+        billAdapter = new RVAdapter(billList, this);
     }
 
 
@@ -112,6 +142,8 @@ public class MainActivity extends AppCompatActivity
                     bill.setAmount(Integer.parseInt(line));
                     bill.setVendorAddress("MacD");
                     billId = db.createBill(bill);
+                    billList.add(bill);
+                    billAdapter.notifyDataSetChanged();
                     Log.i("billId", String.valueOf(billId));
                 } else if (i > 3) {
                     if ((i - 4) % 3 == 0) {
@@ -165,6 +197,7 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.button_groceries:
                 type = "groceries";
+                Log.i("Notes","groceris clicked");
                 break;
             case R.id.button_clothing:
                 type = "clothing";

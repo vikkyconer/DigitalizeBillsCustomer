@@ -8,11 +8,12 @@
     tools:openDrawer="start">
 
 
-    <fragment
-        android:id="@+id/main_screen_fragemnt"
-        android:name="com.example.app.digitalizebillscustomer.MainScreen.MainScreenFragment"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 
     <android.support.design.widget.NavigationView
