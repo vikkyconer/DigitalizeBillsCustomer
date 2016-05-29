@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Product Table create statement
     private static final String CREATE_TABLE_PRODUCT = "CREATE TABLE " + TABLE_PRODUCT +
             "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PRODUCT_NAME + " TEXT," +
-            KEY_ITEM_PRICE + " INTEGER" + ")";
+            KEY_ITEM_PRICE + " INTEGER," + KEY_QUANTITY + " INTEGER" + ")";
 
     //Bill_Product Table create statement
     private static final String CREATE_TABLE_BILL_PRODUCT = "CREATE TABLE " + TABLE_BILL_PRODUCT +
@@ -117,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-//        values.put(KEY_ID, product.getId());
+        values.put(KEY_ID, product.getId());
         values.put(KEY_PRODUCT_NAME, product.getName());
         values.put(KEY_ITEM_PRICE, product.getPrice());
         values.put(KEY_QUANTITY, product.getQuantity());

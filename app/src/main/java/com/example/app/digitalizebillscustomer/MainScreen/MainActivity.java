@@ -62,8 +62,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getStoredData();
         initializeViews();
+        getStoredData();
+
         //       new MainScreenPresenter(mainScreenModel(), mainScreenView());
         //       new SlidingDrawerPresenter(slidingDrawerModel(), slidingDrawerView());
     }
@@ -87,30 +88,23 @@ public class MainActivity extends AppCompatActivity
         File file = new File(sdcard, "test.txt");
 
         StringBuilder text = new StringBuilder();
+        Product product = new Product();
+        Bill bill = new Bill();
+
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = "";
             long billId = 0, productId;
             int i;
-            Product product = null;
-    //        line = br.readLine();
-            Bill bill = new Bill();
+            line = br.readLine();
 
-    //       for (i = 0; line != null; i++) {
-    //            Log.i("lines", line);
-//               bill = new Bill();
-               bill.setId(12);
-               bill.setVendorName("a");
-               bill.setVendorAddress("af");
-               bill.setAmount(4);
-               bill.setBillDate("23");
-               db.createBill(bill);
-          /*      if (i == 0) {
+            for (i = 0; line != null; i++) {
+                Log.i("lines", line);
+                if (i == 0) {
                     bill = new Bill();
                     bill.setId(Integer.parseInt(line));
-                }
-                else if (i == 1)
+                } else if (i == 1)
                     bill.setVendorName(line);
                 else if (i == 2)
                     bill.setBillDate(line);
@@ -122,6 +116,7 @@ public class MainActivity extends AppCompatActivity
                 } else if (i > 3) {
                     if ((i - 4) % 3 == 0) {
                         product = new Product();
+                        product.setId(i);
                         product.setName(line);
                     }
                     if ((i - 4) % 3 == 1)
@@ -131,9 +126,9 @@ public class MainActivity extends AppCompatActivity
                         productId = db.createProduct(product);
                         db.createBillProduct(billId, productId);
                     }
-                } */
-  //             line = br.readLine();
-    //        }
+                }
+                line = br.readLine();
+            }
             br.close();
 //            boolean deleted = file.delete();
 //            Log.i("Notes", String.valueOf(deleted));
