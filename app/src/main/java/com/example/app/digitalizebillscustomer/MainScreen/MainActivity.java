@@ -1,6 +1,7 @@
 package com.example.app.digitalizebillscustomer.MainScreen;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
@@ -63,19 +64,20 @@ public class MainActivity extends AppCompatActivity
     private String type;
     private DatabaseHelper db;
     private RecyclerView mRecyclerView;
-//    private RecyclerView.Adapter mAdapter;
+    //    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RVAdapter billAdapter;
     private ArrayList<Bill> billList;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initializeViews();
         defaultConfiguration();
         getStoredData();
+
 
         //       new MainScreenPresenter(mainScreenModel(), mainScreenView());
         //       new SlidingDrawerPresenter(slidingDrawerModel(), slidingDrawerView());
@@ -83,16 +85,18 @@ public class MainActivity extends AppCompatActivity
 
     private void defaultConfiguration() {
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(billAdapter);
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         // do whatever
                         Log.i("Notes Position", String.valueOf(position));              //change position to place id
-                        Navigator.toBillDetailsActivity(getApplicationContext(), billList.get(position).getId());
+                        Navigator.toBillDetailsActivity(context, billList.get(position).getId());
                     }
                 })
         );
+
+        context = this;
     }
 
     private void initializeViews() {
@@ -108,7 +112,6 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleView);
         mLayoutManager = new LinearLayoutManager(this);
         billList = new ArrayList<>();
-        billAdapter = new RVAdapter(billList, this);
     }
 
 
@@ -121,6 +124,12 @@ public class MainActivity extends AppCompatActivity
         Product product = new Product();
         Bill bill = new Bill();
 
+
+//        billAdapter.notifyDataSetChanged();
+
+//        billList =  db.getBills();
+//        Log.i("billListSize", String.valueOf(billList.size()));
+//        billAdapter.notifyDataSetChanged();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -140,10 +149,12 @@ public class MainActivity extends AppCompatActivity
                     bill.setBillDate(line);
                 else if (i == 3) {
                     bill.setAmount(Integer.parseInt(line));
+                    Log.i("amount",bill.getAmount()+"");
                     bill.setVendorAddress("MacD");
                     billId = db.createBill(bill);
-                    billList.add(bill);
-                    billAdapter.notifyDataSetChanged();
+//                    billList.add(bill);
+//                    Log.i("notes", billList.get(0).getVendorName());
+//                    billAdapter.notifyDataSetChanged();
                     Log.i("billId", String.valueOf(billId));
                 } else if (i > 3) {
                     if ((i - 4) % 3 == 0) {
@@ -162,12 +173,19 @@ public class MainActivity extends AppCompatActivity
                 line = br.readLine();
             }
             br.close();
-//            boolean deleted = file.delete();
-//            Log.i("Notes", String.valueOf(deleted));
+            boolean deleted = file.delete();
+            Log.i("Notes", String.valueOf(deleted));
         } catch (IOException e) {
             Log.i("Notes", e.toString());
         }
 
+        billList = db.getBills();
+        billAdapter = new RVAdapter(billList, this);
+        mRecyclerView.setAdapter(billAdapter);
+        for (int i = 0; i < billList.size(); i++) {
+            Log.i("bill-1", billList.get(i).getVendorName());
+        }
+//        billAdapter.notifyDataSetChanged();
         Log.i("Notes", "reached");
 
     }
@@ -195,9 +213,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.button_groceries:
+            case R.id.button_groceries: billList.clear();
+                billList = db.getBillByType("groceries");
                 type = "groceries";
-                Log.i("Notes","groceris clicked");
+                Log.i("Notes", "groceris clicked");
                 break;
             case R.id.button_clothing:
                 type = "clothing";

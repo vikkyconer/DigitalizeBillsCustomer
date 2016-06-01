@@ -90,20 +90,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 * Creating a bill
 */
     public long createBill(Bill bill) {
-        Log.i("database","started");
+        Log.i("database", "started");
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        Log.i("database","start saving");
+        Log.i("database", "start saving");
         values.put(KEY_ID, bill.getId());
         values.put(KEY_VENDOR_NAME, bill.getVendorName());
         values.put(KEY_VENDOR_ADDRESS, bill.getVendorAddress());
         values.put(KEY_BILL_DATE, bill.getBillDate());
-        Log.i("database","bill date saved");
+        Log.i("database", "bill date saved");
         values.put(KEY_AMOUNT, bill.getAmount());
 
-        Log.i("database","inserting");
+        Log.i("database", "inserting");
         // insert row
         long bill_id = db.insert(TABLE_BILL, null, values);
 
@@ -141,8 +141,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<Bill> getBillByType(String type) {
-        List<Bill> billList = new ArrayList<>();
+    public ArrayList<Bill> getBillByType(String type) {
+        ArrayList<Bill> billList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_BILL;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -162,5 +162,80 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return billList;
+    }
+
+    public ArrayList<Bill> getBills() {
+        ArrayList<Bill> billList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BILL;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Bill bill = new Bill();
+                bill.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                bill.setBillDate(c.getString(c.getColumnIndex(KEY_BILL_DATE)));
+                bill.setVendorName(c.getString(c.getColumnIndex(KEY_VENDOR_NAME)));
+                bill.setAmount(Integer.parseInt(c.getString(c.getColumnIndex(KEY_AMOUNT))));
+//                place.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+                // adding to place list
+                billList.add(bill);
+            } while (c.moveToNext());
+        }
+
+        return billList;
+    }
+
+    public ArrayList<Product> getBillProducts(String bill_id) {
+        ArrayList<Product> productList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PRODUCT + " product, "
+                + TABLE_BILL + " bill, " + TABLE_BILL_PRODUCT + " bill_product WHERE bill."
+                + KEY_ID + " = '" + bill_id + "'" + " AND product." + KEY_ID
+                + " = " + "bill_product." + KEY_PRODUCT_ID + " AND bill." + KEY_ID + " = "
+                + "bill_product." + KEY_BILL_ID;
+
+        Log.e("query", selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()) {
+            do {
+                Product product = new Product();
+                product.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                product.setName((c.getString(c.getColumnIndex(KEY_PRODUCT_NAME))));
+                product.setQuantity(Integer.parseInt(c.getString(c.getColumnIndex(KEY_QUANTITY))));
+//                td.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+                // adding to friend list
+                productList.add(product);
+            } while (c.moveToNext());
+        }
+
+        return productList;
+    }
+
+    public Bill getBill(long bill_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_BILL + " WHERE "
+                + KEY_ID + " = " + bill_id;
+
+        Log.e("query", selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        Bill bill = new Bill();
+        bill.setId(c.getColumnIndex(KEY_ID));
+        bill.setBillDate((c.getString(c.getColumnIndex(KEY_BILL_DATE))));
+        bill.setVendorName(c.getString(c.getColumnIndex(KEY_VENDOR_NAME)));
+//        place.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+        return bill;
     }
 }

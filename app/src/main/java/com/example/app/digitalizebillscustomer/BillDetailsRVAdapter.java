@@ -21,13 +21,13 @@ import java.util.List;
 
 public class BillDetailsRVAdapter extends RecyclerView.Adapter<BillDetailsRVAdapter.PersonViewHolder> {
 
-    private List<Bill> billList;
+    private Bill bill;
     private List<Product> productList;
     private Context context;
     DatabaseHelper db;
 
-    public BillDetailsRVAdapter(List<Bill> billList, List<Product> productList, Context context) {
-        this.billList = billList;
+    public BillDetailsRVAdapter(Bill bill, List<Product> productList, Context context) {
+        this.bill = bill;
         this.productList = productList;
         this.context = context;
     }
@@ -48,8 +48,8 @@ public class BillDetailsRVAdapter extends RecyclerView.Adapter<BillDetailsRVAdap
 
 
     private void initialize(PersonViewHolder holder, int i) {
-        holder.vendorName.setText(billList.get(i).getVendorName());
-        holder.date.setText(String.valueOf(billList.get(i).getBillDate()));
+        holder.vendorName.setText(bill.getVendorName());
+        holder.date.setText(String.valueOf(bill.getBillDate()));
         showBills(holder, i);
 
     }
@@ -65,16 +65,16 @@ public class BillDetailsRVAdapter extends RecyclerView.Adapter<BillDetailsRVAdap
             quantity = String.valueOf(productList.get(i).getQuantity());
             total = String.valueOf((productList.get(i).getPrice() * productList.get(i).getQuantity()));
             ((TextView) view.findViewById(R.id.item_name)).setText(name);
-            ((TextView) view.findViewById(R.id.price)).setText(price);
-            ((TextView) view.findViewById(R.id.quantity)).setText(quantity);
-            ((TextView) view.findViewById(R.id.total)).setText(total);
+            ((TextView) view.findViewById(R.id.item_price)).setText(price);
+            ((TextView) view.findViewById(R.id.item_quantity)).setText(quantity);
+            ((TextView) view.findViewById(R.id.item_total)).setText(total);
             holder.itemsContainer.addView(view);
         }
     }
 
     @Override
     public int getItemCount() {
-        return billList.size();
+        return productList.size();
     }
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
