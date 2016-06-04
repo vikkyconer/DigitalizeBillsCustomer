@@ -9,4 +9,6 @@ public class Constants {
 
     public static int SPLASHTIME = 3000;
 
+    public static String typeUser = "none";
+
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_screen_green"
-    tools:context=".LoginActivity">
+    tools:context=".SignInScreen.SignInActivity">
 
     <LinearLayout
         android:id="@+id/email_container"
@@ -50,6 +50,7 @@
 
 
     <LinearLayout
+        android:id="@+id/sign_up_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_below="@id/email_container"

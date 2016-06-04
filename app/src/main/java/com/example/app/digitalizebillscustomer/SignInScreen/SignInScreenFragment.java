@@ -8,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app.digitalizebillscustomer.Constants;
+import com.example.app.digitalizebillscustomer.Models.Vendor;
 import com.example.app.digitalizebillscustomer.Navigator;
 import com.example.app.digitalizebillscustomer.R;
 import com.example.app.digitalizebillscustomer.Models.User;
+import com.example.app.digitalizebillscustomer.SplashActivity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,6 +35,7 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     private TextView signUp;
     Button signInButton;
     EditText email, password;
+    LinearLayout signUpContainer;
 
     @Nullable
     @Override
@@ -55,8 +60,11 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
     private void initializeViews(View view) {
         signUp = (TextView) view.findViewById(R.id.sign_up);
         signInButton = (Button) view.findViewById(R.id.sign_in);
+        signUpContainer = (LinearLayout) view.findViewById(R.id.sign_up_container);
         email = (EditText) view.findViewById(R.id.email);
         password = (EditText) view.findViewById(R.id.password);
+        if (Constants.typeUser == "vendor")
+            signUpContainer.removeAllViews();
     }
 
     @Override
@@ -71,6 +79,14 @@ public class SignInScreenFragment extends Fragment implements SignInScreenView, 
         } else {
             Toast.makeText(getActivity(), "Username or password wrong", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void vendorAuthenticated(Vendor vendorSignInResponse) {
+        if (vendorSignInResponse.getStatus() != false) {
+            Navigator.toVendorMainScreen(getActivity());
+        } else
+            Toast.makeText(getActivity(), "Username or password wrong", Toast.LENGTH_LONG).show();
     }
 
     @Override

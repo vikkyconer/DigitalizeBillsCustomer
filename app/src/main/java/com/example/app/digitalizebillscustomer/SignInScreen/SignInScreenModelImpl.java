@@ -1,7 +1,9 @@
 package com.example.app.digitalizebillscustomer.SignInScreen;
 
 import com.example.app.digitalizebillscustomer.AppService;
+import com.example.app.digitalizebillscustomer.Constants;
 import com.example.app.digitalizebillscustomer.Models.User;
+import com.example.app.digitalizebillscustomer.Models.Vendor;
 
 import java.util.Map;
 
@@ -20,6 +22,11 @@ public class SignInScreenModelImpl implements SignInScreenModel {
 
     @Override
     public Observable<User> signIn(Map<String, String> signInRequestMap) {
-        return service.signIn(signInRequestMap);
+        return service.customerSignIn(signInRequestMap);
+    }
+
+    @Override
+    public Observable<Vendor> vendorSignIn(Map<String, String> signInRequestMap) {
+        return service.vendorSignIn(signInRequestMap);
     }
 }

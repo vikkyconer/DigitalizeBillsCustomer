@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.app.digitalizebillscustomer.MainScreen.MainActivity;
+import com.example.app.digitalizebillscustomer.MainScreen.VendorMainActivity;
 import com.example.app.digitalizebillscustomer.SignInScreen.SignInActivity;
 import com.example.app.digitalizebillscustomer.SignUpScreen.SignUpActivity;
 
@@ -35,6 +36,11 @@ public class Navigator {
 
     public static void toSingUpScreen(Context context) {
         Intent intent = new Intent(context, SignUpActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void toVendorMainScreen(Context context) {
+        Intent intent = new Intent(context, VendorMainActivity.class);
         context.startActivity(intent);
     }
 }

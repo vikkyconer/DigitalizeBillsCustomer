@@ -1,5 +1,7 @@
 package com.example.app.digitalizebillscustomer.SignInScreen;
 
+import com.example.app.digitalizebillscustomer.Constants;
+
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -8,7 +10,11 @@ import rx.schedulers.Schedulers;
  */
 public class SignInScreenPresenter {
     public SignInScreenPresenter(SignInScreenView view, SignInScreenModel model) {
-        view.signIn().subscribe(map -> model.signIn(map).subscribeOn(Schedulers.io()).
-                observeOn(AndroidSchedulers.mainThread()).subscribe(signInResponse -> view.userAuthenticated(signInResponse)));
+        if (Constants.typeUser == "customer")
+            view.signIn().subscribe(map -> model.signIn(map).subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).subscribe(signInResponse -> view.userAuthenticated(signInResponse)));
+        else if(Constants.typeUser == "vendor")
+            view.signIn().subscribe(map -> model.vendorSignIn(map).subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread()).subscribe(vendorSignInResponse -> view.vendorAuthenticated(vendorSignInResponse)));
     }
 }
